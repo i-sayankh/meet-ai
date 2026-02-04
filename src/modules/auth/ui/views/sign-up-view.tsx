@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -42,9 +43,9 @@ const formSchema = z
   });
 
 export const SignUpView = () => {
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -65,6 +66,7 @@ export const SignUpView = () => {
         name: data.name,
         email: data.email,
         password: data.password,
+        callbackURL: "/",
       },
       {
         onSuccess: () => {
@@ -205,16 +207,28 @@ export const SignUpView = () => {
                     type="button"
                     className="w-full"
                     disabled={isLoading}
+                    onClick={() =>
+                      authClient.signIn.social({
+                        provider: "google",
+                        callbackURL: "/",
+                      })
+                    }
                   >
-                    Google
+                    <FaGoogle />
                   </Button>
                   <Button
                     variant="outline"
                     type="button"
                     className="w-full"
                     disabled={isLoading}
+                    onClick={() =>
+                      authClient.signIn.social({
+                        provider: "github",
+                        callbackURL: "/",
+                      })
+                    }
                   >
-                    Github
+                    <FaGithub />
                   </Button>
                 </div>
 

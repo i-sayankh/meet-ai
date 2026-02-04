@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -31,10 +32,9 @@ const formSchema = z.object({
 });
 
 export const SignInView = () => {
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,6 +51,7 @@ export const SignInView = () => {
       {
         email: data.email,
         password: data.password,
+        callbackURL: "/",
       },
       {
         onSuccess: () => {
@@ -142,11 +143,33 @@ export const SignInView = () => {
                   </span>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <Button variant="outline" type="button" className="w-full" disabled={isLoading}>
-                    Google
+                  <Button
+                    variant="outline"
+                    type="button"
+                    className="w-full"
+                    disabled={isLoading}
+                    onClick={() =>
+                      authClient.signIn.social({
+                        provider: "google",
+                        callbackURL: "/",
+                      })
+                    }
+                  >
+                    <FaGoogle />
                   </Button>
-                  <Button variant="outline" type="button" className="w-full" disabled={isLoading}>
-                    Github
+                  <Button
+                    variant="outline"
+                    type="button"
+                    className="w-full"
+                    disabled={isLoading}
+                    onClick={() =>
+                      authClient.signIn.social({
+                        provider: "github",
+                        callbackURL: "/",
+                      })
+                    }
+                  >
+                    <FaGithub />
                   </Button>
                 </div>
 
