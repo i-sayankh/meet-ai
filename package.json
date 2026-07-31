@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "dev:webhook": "ngrok http --url=sufferer-gloater-footwork.ngrok-free.dev 3000"
   },
   "dependencies": {
     "@base-ui/react": "^1.1.0",
@@ -17,6 +18,7 @@
     "@hookform/resolvers": "^5.2.2",
     "@neondatabase/serverless": "^1.0.0",
     "@stream-io/node-sdk": "^0.7.61",
+    "@stream-io/openai-realtime-api": "^0.4.2",
     "@stream-io/video-react-sdk": "^1.39.1",
     "@tanstack/react-query": "^5.76.1",
     "@tanstack/react-table": "^8.21.3",
