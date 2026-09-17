@@ -13,7 +13,6 @@ import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { generateAvatarUri } from "@/lib/avatar";
 
-// @ts-expect-error: side-effect CSS import from external package without type declarations
 import "@stream-io/video-react-sdk/dist/css/styles.css";
 
 interface Props {

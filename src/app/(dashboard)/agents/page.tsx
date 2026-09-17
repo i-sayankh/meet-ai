@@ -15,11 +15,11 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 interface Props {
-  agentsSearchParams: Promise<SearchParams>;
+  searchParams: Promise<SearchParams>;
 }
 
-const Page = async ({ agentsSearchParams }: Props) => {
-  const filters = await loadAgentsSearchParams(agentsSearchParams);
+const Page = async ({ searchParams }: Props) => {
+  const filters = await loadAgentsSearchParams(searchParams);
   const session = await auth.api.getSession({
     headers: await headers(),
   });

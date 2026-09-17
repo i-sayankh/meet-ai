@@ -13,7 +13,6 @@ import {
 
 import { useTRPC } from "@/trpc/client";
 
-// @ts-expect-error: side-effect CSS import from external package without type declarations
 import "@stream-io/video-react-sdk/dist/css/styles.css";
 import { CallUI } from "./call-ui";
 
