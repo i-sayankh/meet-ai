@@ -1,6 +1,7 @@
 import { and, eq, not } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 import {
+  MessageNewEvent,
   CallEndedEvent,
   CallTranscriptionReadyEvent,
   CallRecordingReadyEvent,
@@ -145,6 +146,33 @@ export async function POST(req: NextRequest) {
         recordingUrl: event.call_recording.url,
       })
       .where(eq(meetings.id, meetingId));
+  } else if (eventType === "message.new") {
+    const event = payload as MessageNewEvent;
+
+    const userId = event.user?.id;
+    const channelId = event.channel_id;
+    const text = event.message?.text;
+    const messageId = event.message?.id;
+
+    if (!userId || !channelId || !text || !messageId) {
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 },
+      );
+    }
+
+    // Generating the AI reply takes several seconds (DB lookups, Stream API
+    // calls, an LLM completion) - far longer than Stream's webhook deadline.
+    // Hand it off to Inngest so this handler can respond immediately.
+    //
+    // Stream delivers webhooks at-least-once, so the same message.new event
+    // can arrive more than once. Using the message id as the event id makes
+    // Inngest dedupe retries instead of triggering a second AI reply.
+    await inngest.send({
+      id: `chat-message-new-${messageId}`,
+      name: "chat/message.new",
+      data: { userId, channelId, text },
+    });
   }
 
   return NextResponse.json({ status: "ok" });
