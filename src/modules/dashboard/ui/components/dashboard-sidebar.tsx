@@ -19,6 +19,7 @@ import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { DashboardUserButton } from "./dashboard-user-button";
+import { DashboardTrial } from "./dashboard-trial";
 
 const firstSection = [
   {
@@ -67,7 +68,7 @@ export const DashboardSidebar = () => {
                     className={cn(
                       "h-10 hover:bg-linear-to-r/oklch border border-transparent hover:border-[#5D6B68]/10 from-sidebar-accent from-5% via-30% via-sidebar/50 to-sidebar/50",
                       pathname === item.href &&
-                        "bg-linear-to-r/oklch border-[#5D6B68]/10"
+                        "bg-linear-to-r/oklch border-[#5D6B68]/10",
                     )}
                     isActive={pathname === item.href}
                   >
@@ -98,7 +99,7 @@ export const DashboardSidebar = () => {
                     className={cn(
                       "h-10 hover:bg-linear-to-r/oklch border border-transparent hover:border-[#5D6B68]/10 from-sidebar-accent from-5% via-30% via-sidebar/50 to-sidebar/50",
                       pathname === item.href &&
-                        "bg-linear-to-r/oklch border-[#5D6B68]/10"
+                        "bg-linear-to-r/oklch border-[#5D6B68]/10",
                     )}
                     isActive={pathname === item.href}
                   >
@@ -117,6 +118,7 @@ export const DashboardSidebar = () => {
       </SidebarContent>
 
       <SidebarFooter className="text-white">
+        <DashboardTrial />
         <DashboardUserButton />
       </SidebarFooter>
     </Sidebar>
