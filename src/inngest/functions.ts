@@ -43,17 +43,20 @@ Example:
 export const meetingsProcessing = inngest.createFunction(
   { id: "meetings/processing", triggers: { event: "meetings/processing" } },
   async ({ event, step }) => {
-    const response = await step.fetch(event.data.transcriptUrl);
+    const transcriptText = await step.run("fetch-transcript", async () => {
+      const res = await fetch(event.data.transcriptUrl);
 
-    if (!response.ok) {
-      throw new Error(
-        `Failed to fetch transcript: ${response.status} ${response.statusText}`,
-      );
-    }
+      if (!res.ok) {
+        throw new Error(
+          `Failed to fetch transcript: ${res.status} ${res.statusText}`,
+        );
+      }
+
+      return res.text();
+    });
 
     const transcript = await step.run("parse-transcript", async () => {
-      const text = await response.text();
-      return JSONL.parse<StreamTranscriptItem>(text);
+      return JSONL.parse<StreamTranscriptItem>(transcriptText);
     });
 
     const transcriptWithSpeakers = await step.run("add-speakers", async () => {
