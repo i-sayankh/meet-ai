@@ -40,11 +40,19 @@ const DisabledVideoPreview = () => {
 };
 
 const AllowBrowserPermissions = () => {
+  const { useCameraState, useMicrophoneState } = useCallStateHooks();
+  const { hasBrowserPermission: hasCameraPermission } = useCameraState();
+  const { hasBrowserPermission: hasMicPermission } = useMicrophoneState();
+
   return (
-    <p className="text-sm">
-      Please grant your browser a permission to access your camera and
-      microphone.
-    </p>
+    <div className="text-sm">
+      {!hasCameraPermission && (
+        <p>Please grant your browser permission to access your camera.</p>
+      )}
+      {!hasMicPermission && (
+        <p>Please grant your browser permission to access your microphone.</p>
+      )}
+    </div>
   );
 };
 
