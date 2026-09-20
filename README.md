@@ -1,3 +1,6 @@
+<img width="1435" height="822" alt="image" src="https://github.com/user-attachments/assets/5dc21be0-3b8d-43b6-8950-b2f3a3278e0d" />
+
+
 # Meet AI
 
 An AI-powered video meeting platform built with Next.js. Users schedule meetings with configurable AI agents, join them over real-time video, and afterwards get an automatic transcript, summary, and a chat interface to ask questions about what was discussed.
